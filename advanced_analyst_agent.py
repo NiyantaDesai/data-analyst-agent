@@ -481,7 +481,7 @@ def main():
             )
         
         if api_key:
-            st.session_state.api_key = apiKEY
+            st.session_state.api_key = API_KEY
         
         st.markdown("---")
         
