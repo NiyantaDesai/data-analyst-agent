@@ -446,18 +446,42 @@ def main():
     st.markdown("---")
     
     # Sidebar
+    # Sidebar
     with st.sidebar:
         st.header("⚙️ Configuration")
         
-        # API Key input
-        api_key = st.text_input(
-            "Anthropic API Key",
-            type="password",
-            help="Enter your Anthropic API key for AI-powered insights"
-        )
+        # API Key input - Try to get from secrets first, then allow user input
+        try:
+            # Try to get API key from Streamlit secrets
+            default_api_key = st.secrets.get("ANTHROPIC_API_KEY", None)
+            if default_api_key:
+                st.success("✅ API Key loaded from secure storage")
+                api_key = default_api_key
+                # Option to override with custom key
+                use_custom = st.checkbox("Use different API key", value=False)
+                if use_custom:
+                    api_key = st.text_input(
+                        "Custom Anthropic API Key",
+                        type="password",
+                        help="Enter a different API key"
+                    )
+            else:
+                # No secret found, ask user for key
+                api_key = st.text_input(
+                    "Anthropic API Key",
+                    type="password",
+                    help="Enter your Anthropic API key for AI-powered insights"
+                )
+        except Exception as e:
+            # Fallback if secrets not available (local development)
+            api_key = st.text_input(
+                "Anthropic API Key",
+                type="password",
+                help="Enter your Anthropic API key for AI-powered insights"
+            )
         
         if api_key:
-            st.session_state.api_key = api_key
+            st.session_state.api_key = apiKEY
         
         st.markdown("---")
         
