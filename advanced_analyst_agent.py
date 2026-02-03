@@ -90,7 +90,7 @@ if 'analysis_results' not in st.session_state:
     st.session_state.analysis_results = {}
 if 'chat_history' not in st.session_state:
     st.session_state.chat_history = []
-if 'api_key' not in st.session_state:
+if 'API_KEY' not in st.session_state:
     st.session_state.api_key = None
 
 
